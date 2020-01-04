@@ -2,7 +2,7 @@ import * as dynamoDbLib from "../../libs/dynamodb-lib";
 import { success, failure } from "../../libs/response-lib";
 
 export async function main(event, context) {
-  const data = JSON.parse(event.body);
+  const req = JSON.parse(event.body);
   const params = {
     TableName: process.env.tableName,
     // 'Key' defines the partition key and sort key of the item to be updated
@@ -16,8 +16,8 @@ export async function main(event, context) {
     // 'ExpressionAttributeValues' defines the value in the update expression
     UpdateExpression: "SET content = :content, attachment = :attachment",
     ExpressionAttributeValues: {
-      ":attachment": data.attachment || null,
-      ":content": data.content || null
+      ":attachment": req.attachment || null,
+      ":content": req.content || null
     },
     // 'ReturnValues' specifies if and how to return the item's attributes,
     // where ALL_NEW returns all attributes of the item after the update; you

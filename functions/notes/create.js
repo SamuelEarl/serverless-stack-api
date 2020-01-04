@@ -4,7 +4,7 @@ import { success, failure } from "../../libs/response-lib";
 
 export async function main(event, context) {
   // Request body is passed in as a JSON encoded string in 'event.body'
-  const data = JSON.parse(event.body);
+  const req = JSON.parse(event.body);
 
   const params = {
     TableName: process.env.tableName,
@@ -19,8 +19,8 @@ export async function main(event, context) {
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       noteId: uuid.v1(),
-      content: data.content,
-      attachment: data.attachment,
+      content: req.content,
+      attachment: req.attachment,
       createdAt: Date.now()
     }
   };
@@ -30,6 +30,7 @@ export async function main(event, context) {
     return success(params.Item);
   }
   catch (e) {
+    console.log("CREATE ERROR:", e);
     return failure({ status: false });
   }
 }

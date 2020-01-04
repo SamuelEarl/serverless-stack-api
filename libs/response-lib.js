@@ -1,3 +1,8 @@
+/**
+ * This file will manage building the response objects for both success and failure cases with the
+ * proper HTTP status code and headers.
+ */
+
 export function success(body) {
   return buildResponse(200, body);
 }
